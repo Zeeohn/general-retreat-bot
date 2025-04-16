@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 
 const url = "https://general-retreat-bot.onrender.com";
-const port = process.env.PORT || 3000;
+const port = parseInt(process.env.PORT || "3000", 10);
 
 // Create bot instance with webhook
 const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, {
@@ -88,6 +88,7 @@ bot.on("error", (error) => {
   console.error("Bot error:", error);
 });
 
-app.listen(port, () => {
+// Update the listen configuration to bind to 0.0.0.0
+app.listen(port, "0.0.0.0", () => {
   console.log(`Server is running on port ${port}`);
 });
