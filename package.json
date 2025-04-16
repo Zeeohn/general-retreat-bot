@@ -1,0 +1,39 @@
+{
+  "name": "general-retreat-bot",
+  "version": "1.0.0",
+  "description": "General workers retreat bot for Word Sanctuary. A Church that is Heaven!",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --exec babel-node app.js",
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": ">=14.20.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zeeohn/general-retreat-bot.git"
+  },
+  "author": "ZCODES",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zeeohn/general-retreat-bot/issues"
+  },
+  "homepage": "https://github.com/Zeeohn/general-retreat-bot#readme",
+  "dependencies": {
+    "@babel/cli": "^7.27.0",
+    "@babel/core": "^7.26.10",
+    "@babel/node": "^7.26.0",
+    "@babel/preset-env": "^7.26.9",
+    "axios": "^1.8.4",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "list_end_points": "^2.0.6",
+    "mongoose": "^8.13.2",
+    "morgan": "^1.10.0",
+    "node-telegram-bot-api": "^0.66.0",
+    "nodemon": "^3.1.9"
+  }
+}
