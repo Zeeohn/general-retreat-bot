@@ -1,32 +1,32 @@
 require("dotenv").config();
 const TelegramBot = require("node-telegram-bot-api");
-// const fs = require("fs");
-// const path = require("path");
 const express = require("express");
 const app = express();
+
+const url = "https://general-retreat-bot.onrender.com";
+const port = process.env.PORT || 3000;
+
+// Create bot instance with webhook
+const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, {
+  webHook: {
+    port: port,
+  },
+});
+
+// Set the webhook
+bot.setWebHook(`${url}/bot${process.env.TELEGRAM_BOT_TOKEN}`);
+
+app.use(express.json());
+
+// Handle webhook endpoint
+app.post(`/bot${process.env.TELEGRAM_BOT_TOKEN}`, (req, res) => {
+  bot.handleUpdate(req.body);
+  res.sendStatus(200);
+});
 
 app.get("/health", (req, res) => {
   res.status(200).send("OK - Bot is running");
 });
-
-app.listen(process.env.PORT || 3000, () => {
-  console.log("Server is running on port 3000");
-});
-
-function keepAlive() {
-  const url = "https://general-retreat-bot.onrender.com/health";
-  setInterval(() => {
-    fetch(url)
-      .then(() => console.log("Ping successful"))
-      .catch((err) => console.error("Ping failed:", err));
-  }, 13 * 60 * 1000); // Every 13 minutes (Render times out after 15 min of inactivity)
-}
-
-// Call this function when the app starts
-keepAlive();
-
-// Create bot instance
-const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
 
 // Define available files
 const files = [
@@ -84,8 +84,10 @@ bot.on("callback_query", async (query) => {
 });
 
 // Error handling
-bot.on("polling_error", (error) => {
-  console.error("Polling error:", error);
+bot.on("error", (error) => {
+  console.error("Bot error:", error);
 });
 
-console.log("Bot is running...");
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
