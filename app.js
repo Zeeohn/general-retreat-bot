@@ -1,7 +1,29 @@
 require("dotenv").config();
 const TelegramBot = require("node-telegram-bot-api");
-const fs = require("fs");
-const path = require("path");
+// const fs = require("fs");
+// const path = require("path");
+const express = require("express");
+const app = express();
+
+app.get("/health", (req, res) => {
+  res.status(200).send("OK - Bot is running");
+});
+
+app.listen(process.env.PORT || 3000, () => {
+  console.log("Server is running on port 3000");
+});
+
+function keepAlive() {
+  const url = "https://general-retreat-bot.onrender.com/health";
+  setInterval(() => {
+    fetch(url)
+      .then(() => console.log("Ping successful"))
+      .catch((err) => console.error("Ping failed:", err));
+  }, 13 * 60 * 1000); // Every 13 minutes (Render times out after 15 min of inactivity)
+}
+
+// Call this function when the app starts
+keepAlive();
 
 // Create bot instance
 const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
@@ -18,7 +40,6 @@ const files = [
     name: "Leadership Retreat 2025 Invitees",
     path: "./Leadership retreat 2025 invitees.pdf",
   },
-  // Add more files here as needed up to 6
 ];
 
 // Create keyboard markup for file options
@@ -33,7 +54,7 @@ const fileOptions = {
 // Handle /start command
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
-  const welcomeMessage = `Welcome to the General Retreat Bot! 🎉\n\nI can help you access important retreat documents. Please select a file from the options below:`;
+  const welcomeMessage = `Welcome to the General Workers Retreat Bot! 🎉\n\nI can help you access important retreat documents. Please select a file from the options below:`;
 
   bot.sendMessage(chatId, welcomeMessage, fileOptions);
 });
@@ -43,14 +64,12 @@ bot.on("callback_query", async (query) => {
   const chatId = query.message.chat.id;
   const fileId = query.data.split("_")[1];
 
-  // Find the selected file
   const selectedFile = files.find((file) => file.id === fileId);
 
   if (selectedFile) {
     try {
       await bot.answerCallbackQuery(query.id);
 
-      // Send the file
       await bot.sendDocument(chatId, selectedFile.path, {
         caption: `Here's your requested file: ${selectedFile.name}`,
       });
