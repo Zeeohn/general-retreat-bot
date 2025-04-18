@@ -32,13 +32,8 @@ app.get("/health", (req, res) => {
 const files = [
   {
     id: "1",
-    name: "Leadership Retreat 2025 Docket",
-    path: "./Leadership Retreat 2025 Docket.pdf",
-  },
-  {
-    id: "2",
-    name: "Leadership Retreat 2025 Invitees",
-    path: "./Leadership retreat 2025 invitees.pdf",
+    name: "General Workers Retreat 2025 Brochure",
+    path: "./2025 GENERAL WORKERS RETREAT.pdf",
   },
 ];
 
