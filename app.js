@@ -28,12 +28,18 @@ app.get("/health", (req, res) => {
   res.status(200).send("OK - Bot is running");
 });
 
+// CAMP LAWS FOR 2025 WORKERS RETREAT
 // Define available files
 const files = [
   {
     id: "1",
     name: "General Workers Retreat 2025 Brochure",
     path: "./2025 GENERAL WORKERS' RETREAT.pdf",
+  },
+  {
+    id: "2",
+    name: "Camp Laws for 2025 Workers Retreat",
+    path: "./CAMP LAWS FOR 2025 WORKERS RETREAT.pdf",
   },
 ];
 
