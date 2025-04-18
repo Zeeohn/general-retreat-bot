@@ -33,7 +33,7 @@ const files = [
   {
     id: "1",
     name: "General Workers Retreat 2025 Brochure",
-    path: "./2025 GENERAL WORKERS RETREAT.pdf",
+    path: "./2025 GENERAL WORKERS' RETREAT.pdf",
   },
 ];
 
